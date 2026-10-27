@@ -8,12 +8,15 @@
 #SBATCH --reservation=class-sbl-30004-2026-10-21
 #SBATCH --output=logs/%x_%j.out
 #SBATCH --error=logs/%x_%j.err
+
 set -euo pipefail
+
 COURSEDIR=/data/courses/genome_annotation_resources/2026
 WORKDIR=/data/users/srais/genome_annotation_course  # Directory in your /data/users/$USER/Folder.
 # Use the intact-element FASTA
 # Edit these two input paths to match your assembly's filename.
 RAW="$WORKDIR/results/TE_annotation/EDTA"
+
 # Expand the wildcard outside quotes;
 shopt -s nullglob
 FASTA=/data/users/srais/genome_annotation_course/results/TE_annotation/EDTA/ERR11437324_Altai-5.fa.mod.EDTA.TElib.fa

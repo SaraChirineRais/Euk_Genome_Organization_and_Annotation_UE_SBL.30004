@@ -8,11 +8,11 @@ srun --partition=pibu_el8 \
 #prepare a pusher sans les files qu'on veut pas
 git add .
 
-enregistre comme les modifications fait sur mes scirpts du cluster " " donne aux changements
+#enregistre comme les modifications fait sur mes scirpts du cluster " " donne aux changements
 git commit -m "initial commit"
-
-#lier dossier git sur le cluster a mon repo sur le github
-git remote add "origin" git@github.com:SaraChirineRais/Euk_Genome_Organization_and_Annotation_UE_SBL.30004.git
 
 #pusher les info/modif
 git push
+
+#lier dossier git sur le cluster a mon repo sur le github: on a fait une fois avec aymeric, PLUS A FAIRE !!!!!!!!
+git remote add "origin" git@github.com:SaraChirineRais/Euk_Genome_Organization_and_Annotation_UE_SBL.30004.git

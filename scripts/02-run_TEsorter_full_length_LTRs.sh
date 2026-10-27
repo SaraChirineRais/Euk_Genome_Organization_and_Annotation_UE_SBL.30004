@@ -8,12 +8,16 @@
 #SBATCH --reservation=class-sbl-30004-2026-10-15
 #SBATCH --output=logs/%x_%j.out
 #SBATCH --error=logs/%x_%j.err
+
 set -euo pipefail
+
 COURSEDIR=/data/courses/genome_annotation_resources/2026
 WORKDIR=/data/users/srais/genome_annotation_course  # Directory in your /data/users/$USER/Folder.
+
 # Use the intact-element FASTA
 # Edit these two input paths to match your assembly's filename.
 RAW="$WORKDIR/results/TE_annotation/EDTA"
+
 # Expand the wildcard outside quotes;
 shopt -s nullglob
 FASTA=("$RAW"/*.mod.EDTA.raw/*.mod.LTR.intact.raw.fa)
@@ -22,14 +26,18 @@ GFF=("$RAW"/*.mod.EDTA.raw/*.mod.LTR.intact.raw.gff3)
 OUTDIR="$WORKDIR/results/TE_annotation/LTR_full_length"
 unset SINGULARITY_BIND APPTAINER_BIND SINGULARITY_TMPDIR
 mkdir -p "$OUTDIR/tmp"
+
 # Work with copies so ongoing EDTA files are not changed.
 cp "${FASTA[0]}" "$OUTDIR/intact_LTR.fa"
 cp "${GFF[0]}" "$OUTDIR/intact_LTR.gff3"
+
 cd "$OUTDIR"
 apptainer exec -C --bind "$WORKDIR" --bind "$COURSEDIR" \
     --bind "$OUTDIR/tmp":/tmp --pwd "$OUTDIR" \
     "$COURSEDIR/containers/TEsorter_1.3.0.sif" \
     TEsorter intact_LTR.fa -db rexdb-plant -p "$SLURM_CPUS_PER_TASK"
+
+    
 # After this job succeeds, run the R script in the output directory:
 # cd "$OUTDIR"
 # apptainer exec -C --bind "$WORKDIR" --bind "$COURSEDIR" --pwd "$OUTDIR" \
